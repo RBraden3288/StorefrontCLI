@@ -27,13 +27,13 @@ Please read package.json and package-lock.json for additional details on pull re
 <h3>Deployment</h3>
 Creating database and inserting data from storefront.sql using mySql:
 
-<a href="https://youtu.be/Ze6wxsg9bFA" alt="bAmazon Database Created in Bash">
+<a href="https://youtu.be/Ze6wxsg9bFA" alt="bAmazon Database Created in Bash"></a>
 
 The database will return this table if succeful:
-<img src="https://github.com/RBraden3288/StorefrontCLI/blob/master/images/bamazonintable1.png?raw=true  ">
+<img src="https://github.com/RBraden3288/StorefrontCLI/blob/master/images/bamazonintable1.png?raw=true">
 
 Running productsForSale function to display "products" database using node.js:
-<a href="https://youtu.be/tE8kYEINle8" alt="bAmazon Javascript Deployment in Bash">
+<a href="https://youtu.be/tE8kYEINle8" alt="bAmazon Javascript Deployment in Bash"></a>
 
 ---------------------------------------------------------------
 
