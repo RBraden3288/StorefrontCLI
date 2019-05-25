@@ -1,0 +1,23 @@
+{
+  "name": "StorefrontCLI",
+  "version": "1.0.0",
+  "description": "Using Node.js &amp; MySQl to create an Amazon-like storefront.",
+  "main": "bamazonCustomer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RBraden3288/StorefrontCLI.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RBraden3288/StorefrontCLI/issues"
+  },
+  "homepage": "https://github.com/RBraden3288/StorefrontCLI#readme",
+  "dependencies": {
+    "mysql": "^2.17.1"
+  }
+}
