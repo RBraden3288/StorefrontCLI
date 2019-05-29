@@ -38,17 +38,20 @@ The database will return this table if succeful:
 <br>
     <img src="https://github.com/RBraden3288/StorefrontCLI/blob/master/images/bamazonintable1.png?raw=true" width="500">
 <br>
+
 Using the package, console.table, we can structure the database query to look like this:
 <br>
-    <img src="consoletable" width="500">
+    <img src="https://github.com/RBraden3288/StorefrontCLI/blob/master/images/consoletable.png?raw=true" width="500">
 <br>
+
 Running productsForSale function to display "products" database using node.js:
 <br>
     <a href="https://youtu.be/tE8kYEINle8" alt="bAmazon Javascript Deployment in Bash">YOUTUBE: bAmazon Javascript Deployment in Bash</a>
 <br>
+
 The application then checks the inventory following prompting the customer using the function "checkInventory". If the quantity that the customer wants to purchase is in stock thus rendering the order successful, the function fulfillOrder is ran and the database updates itself as such:
 <br>
-    <img src="quantityUpdate" width="500">
+    <img src="https://github.com/RBraden3288/StorefrontCLI/blob/master/images/quantityUpdate.png?raw=true" width="500">
 <br>
 
 
