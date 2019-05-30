@@ -57,7 +57,7 @@ The application then checks the inventory following prompting the customer using
 The function totalCost then displays the cost of the items by multiplying the quantity by the price.
 
 <br>
-    <img src="price" width="500">
+    <img src="https://github.com/RBraden3288/StorefrontCLI/blob/master/images/price.png?raw=true" width="500">
 <br>
 
 
