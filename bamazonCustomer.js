@@ -44,21 +44,20 @@ function likeToBuy() {
     .prompt([
       {
         name: "itemID",
-        message: "Please enter the ID of the product you would like to buy.",
+        message: chalk.bold.blue("Please enter the ID of the product you would like to buy."),
         type: "number",
       },
       {
         name: "quantity",
-        message: "How many items would you like to buy?",
+        message: chalk.bold.blue("How many items would you like to buy?"),
         type: "number",
       }
     ])
     .then(function (customerCart) {
-      // If the the answers are inputed, we displays the reponse
+      // If the the answers are inputed, we display the reponse
       var itemCustomerWants = customerCart.itemID;
       var howManyCustomerWants = customerCart.quantity;
       checkInventory(itemCustomerWants, howManyCustomerWants)
-      // fulfillOrder(itemCustomerWants, howManyCustomerWants);
     });
     // connection.end(); 
   }
@@ -87,19 +86,39 @@ function likeToBuy() {
 
   //call this function after itemID and Quantity are requested
   function fulfillOrder (itemID, itemQuantity) {
-    //"SET" manipulates value, ?'s are placeholders for values to be passed through
+    //"SET" manipulates value, "UPDATE" changes quantity, ?'s are placeholders for values to be passed through
     connection.query("UPDATE products SET stock_quantity = stock_quantity - ? WHERE item_id = ?",
     //pass in values, updates quantity if order is successful
     [itemQuantity, itemID],
     //pass in a callback function
-    function(err, response){
+    function(err){
       if (err) {
         console.log(err)
       } else {
         console.log(chalk.bold.green("Order Successful!"));
-        productsForSale();
+        //show the customer the total cost of their purchase.
+        totalCost();
+        // //prompt the customer to purchase more items...
+        // productsForSale();
       };
+      connection.end(); 
     })
+
+    function totalCost () {
+      //in connection.query take the price from the item_id and multiply it by the itemQuantity
+      connection.query("SELECT * FROM products WHERE item_id = ?",
+      [itemID],
+      function (error, response) {
+        if (error) {
+          console.log(error)
+        } else {
+          var totalPrice = response[0].price * itemQuantity;
+          console.log(chalk.bold.green("Your total is: " + totalPrice))
+          //take the price from the item_id and multiply it by the itemQuantity
+        }
+      }
+      )
+    }
 
     
     // if your store _does_ have enough of the product, you should fulfill the customer's order

@@ -7,7 +7,7 @@ Using Node.js &amp; MySQl to create an Amazon-like storefront.
 
 <h3>REQUIRED PACKAGES</h3>
 <ul>
-    <li>node.js</li>
+    <li><a href="https://nodejs.org/en/">node.js</a></li>
     <li><a href="https://www.npmjs.com/package/mysql">mySql</a></li>
     <li><a href="https://www.npmjs.com/package/inquirer#questions">inquirer</a></li>
     <li><a href="https://www.npmjs.com/package/console.table">console.table</a></li>
@@ -54,7 +54,11 @@ The application then checks the inventory following prompting the customer using
     <img src="https://github.com/RBraden3288/StorefrontCLI/blob/master/images/quantityUpdate.png?raw=true" width="500">
 <br>
 
+The function totalCost then displays the cost of the items by multiplying the quantity by the price.
 
+<br>
+    <img src="price" width="500">
+<br>
 
 
 ---------------------------------------------------------------
