@@ -68,10 +68,10 @@ This javascript file allows the user to act as a manager for the StorefrontCLI.
 
 The execution of the functions:
     <ul>
-        <li></li>
-        <li></li>
+        <li>viewProductsForSale()</li>
+        <li>viewLowInventory()</li>
     </ul>
-show how the total inventory and low inventory warning is displayed for the manager:
+show how the total inventory and low inventory warning (when there is an item with less than 5 quantities remaining) is displayed for the manager:
 
 <br>
     <img src="https://github.com/RBraden3288/StorefrontCLI/blob/master/images/mgrview.png?raw=true" width="500">
