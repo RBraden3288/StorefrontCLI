@@ -29,6 +29,8 @@ Please read package.json and package-lock.json for additional details on pull re
 
 <h3>DEPLOYMENT</h3>
 
+<h4>bamazonCustomer</h4>
+
 Creating database and inserting data from storefront.sql using mySql:
 <br>
     <a href="https://youtu.be/Ze6wxsg9bFA" alt="bAmazon Database Created in Bash">YOUTUBE: bAmazon Database Created in Bash</a>
@@ -60,6 +62,20 @@ The function totalCost then displays the cost of the items by multiplying the qu
     <img src="https://github.com/RBraden3288/StorefrontCLI/blob/master/images/price.png?raw=true" width="500">
 <br>
 
+<h4>bAmazonManager</h4>
+
+This javascript file allows the user to act as a manager for the StorefrontCLI.
+
+The execution of the functions:
+    <ul>
+        <li></li>
+        <li></li>
+    </ul>
+show how the total inventory and low inventory warning is displayed for the manager:
+
+<br>
+    <img src="mgrview" width="500">
+<br>
 
 ---------------------------------------------------------------
 
