@@ -31,7 +31,7 @@ function mgrOptions() {
             choices: [
                 "View Products For Sale",
                 "View Low Inventory",
-                "Add to Inventory",
+                "Order Inventory",
                 "Add New Product",
                 "Exit Options"
             ]
@@ -46,7 +46,7 @@ function mgrOptions() {
                 viewLowInventory();
                 break;
             case "Add to Inventory":
-                // addToInventory();
+                orderInventory();
                 break;
             case "Add New Product":
                 // addNewProduct();
@@ -77,40 +77,67 @@ function viewProductsForSale() {
 
 function viewLowInventory() {
     //list all items with an inventory count lower than five  
-    var queryLowInventory = "SELECT * FROM products WHERE stock_quantity <=5"
+    var queryLowInventory = "SELECT * FROM products WHERE stock_quantity <=5";
     connection.query(queryLowInventory, function(error, response) {
         if (error) {
             console.log(error)
         } else {
             //loop through all stock_qunatity and if quantities <5, response should show it
             for (var i = 0; i < response.length; i++) {
-                console.log(chalk.red("\nThe following items are ") +  chalk.bold.red("LOW ") + chalk.red("in stock: \n") +
-                   (chalk.yellow("Item id :" + response[i].item_id + 
+                console.log(chalk.redBright("\nThe following items are ") +  chalk.bold.red("LOW ") + chalk.redBright("in stock: \n") +
+                   (chalk.yellowBright("Item id :" + response[i].item_id + 
                     " || Product: " + response[i].product_name +
                     " || Stock_quantity: " + response[i].stock_quantity + "\n")));
-                    // //use inquirer to prompt manager to order more stock
+                console.log(chalk.red("Order more using ") + (chalk.bold.cyan("Order Inventory")) + (chalk.red(" option in")) + (chalk.bold.magenta(" Manager Options.\n")));
+                    //use inquirer to prompt manager to order more stock
                     // inquirer
                     // .prompt ({
                     //     name: "order",
-                    //     message: chalk.bold.blue("Order more inventory?"),
+                    //     message: chalk.bold.blue("Order more inventory? \n"),
                     //     type: "confirm",
                     // })
                     // .then (function(){
-                        
+                    //     addToInventory();
                     // })
-                    // //return to man menu
-                    mgrOptions()
+                //return to main menu
+                mgrOptions()
             }              
-        }
-        //an else statement for stock_quantities "Everything in stock" if response >5
-        // console.log(chalk.bold.green("All items are in stock!"));
-        // mgrOptions();
+        } 
     });
+    // var queryAllInStock = ("SELECT * FROM products WHERE stock_quantity >5");
+    // connection.query(queryAllInStock, function(error, response){
+    //     if (error) {
+    //         console.log(error)
+    //     } else {
+    //     // an else statement for stock_quantities "Everything in stock" if response >5
+    //     console.log(chalk.bold.green("All items are in stock!"));
+    //     mgrOptions();
+    //     };
+    // })
 };
 
-function addToInventory() {
-
+function orderInventory() {
+    inquirer
+    .prompt([
+      {
+        name: "itemID",
+        message: chalk.bold.blue("Please enter the ID of the product to be re-stocked."),
+        type: "number",
+      },
+      {
+        name: "quantity",
+        message: chalk.bold.blue("Enter order amount"),
+        type: "number",
+      }
+    ])
+    .then(function (fulfillOrder) {
+        // If the the answers are inputed, we display the reponse
+        var itemStoreNeeds = fulfillOrder.itemID;
+        var howManyStoreNeeds = fulfillOrder.quantity;
+        updateInventory(itemStoreNeeds, howManyStoreNeeds)
+      });
 };
+
 
 function addNewProduct() {
     
