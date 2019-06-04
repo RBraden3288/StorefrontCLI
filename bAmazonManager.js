@@ -31,6 +31,7 @@ function mgrOptions() {
             choices: [
                 "View Products For Sale",
                 "View Low Inventory/Order Inventory",
+                "Order Inventory",
                 "Add New Product",
                 "Delete From Iventory",
                 "Exit Options"
@@ -45,13 +46,16 @@ function mgrOptions() {
             case "View Low Inventory/Order Inventory":
                 viewLowInventory();
                 break;
-                case "Add New Product":
-                    addNewProduct();
-                    break;
-                case "Delete From Iventory":
-                    deleteProduct();
-                    break;
-                case "Exit Options":
+            case "Order Inventory":
+                orderInventory()
+                break;
+            case "Add New Product":
+                addNewProduct();
+                break;
+            case "Delete From Iventory":
+                deleteProduct();
+                break;
+            case "Exit Options":
                 connection.end();
                 break;
             }   
@@ -94,16 +98,9 @@ function viewLowInventory() {
             }              
         } 
     });
-    // var queryAllInStock = ("SELECT * FROM products WHERE stock_quantity >5");
-    // connection.query(queryAllInStock, function(error, response){
-    //     if (error) {
-    //         console.log(error)
-    //     } else {
-    //     // an else statement for stock_quantities "Everything in stock" if response >5
-    //     console.log(chalk.bold.green("All items are in stock!"));
-    //     mgrOptions();
-    //     };
-    // })
+    //display a message if stock >5
+    console.log(chalk.bold.greenBright("\nEverything is in stock!\n"));
+    mgrOptions();
 };
 
 function orderInventory() {
@@ -111,88 +108,86 @@ function orderInventory() {
     .prompt([
       {
         name: "itemID",
-        message: chalk.bold.yellow("To exit order form: control+c.") + chalk.bold.cyan("\nOtherwise, \nplease enter the ID of the product to be re-stocked."),
+        message: chalk.bold.yellow("To exit order form: control+c.") + 
+                 chalk.bold.cyan("\nOtherwise, \nplease enter the ID of the product to be re-stocked."),
         type: "number",
       },
       {
         name: "quantity",
-        message: chalk.bold.cyan("Enter order amount"),
+        message: chalk.bold.cyan("Enter total quantity needed."),
         type: "number",
       }
     ])
-    .then(function (mgrInput) {
-        // If the the answers are inputed, we display the reponse
-        var itemStoreNeeds = mgrInput.itemID;
-        var howManyStoreNeeds = mgrInput.quantity;
+    .then(function updateInventory(mgrUpdate) {
+        var itemStoreNeeds = mgrUpdate.itemID;
+        var howManyStoreNeeds = mgrUpdate.quantity;
         console.log(chalk.bold.yellow("\nYou are ordering " + howManyStoreNeeds + " unit(s) of item id#:" + itemStoreNeeds + "\n\n"));
         console.log(chalk.green("Updating inventory......................"));
-        //update quantity per mgrinput
-        // updateInventory();
+        var query = connection.query(
+            "UPDATE products SET ? WHERE ?",
+            [
+              {
+                stock_quantity: howManyStoreNeeds
+              },
+              {
+                item_id: itemStoreNeeds
+              }
+            ],
+            function(err, res) {
+              console.log(res.affectedRows + " products updated!\n");
+            }
+          );
+        // logs the actual query being run
+        console.log(query.sql);  
+        // If the the answers are inputed, we display the reponse
         //direct to viewProducts to show new inventory
-        // console.log(chalk.bold.redBright("\n\nReview updated inventory:\n"));
-        // viewProductsForSale();
+        console.log(chalk.bold.redBright("\n\nReview updated inventory:\n"));
+        viewProductsForSale();
       });
 };
 
-// function updateInventory(itemStoreNeeds, howManyStoreNeeds){
-//   var queryAddStock = "UPDATE products SET stock_quantity = ? WHERE item_id = ?",
-//         [howManyStoreNeeds, itemStoreNeeds,];
-//     connection.query(queryAddStock, function (error, response) {
-//         if (error) {
-//             console.log(error)
-//         } else {
-//         console.log(response.affectedRows + " products updated!\n");
-//         }
-//       }) 
-// }
-
 function addNewProduct() {
-    // var queryAddProduct = ("");
-    // connection.query(queryAddProduct, function(error, response){
-    //     if (error) {
-    //         console.log(error)
-    //     } else {
-            inquirer
-            .prompt([
-              {
-                name: "productName",
-                message: chalk.bold.blue("Enter new product name"),
-                type: "input",
-              },
-              {
-                name: "department",
-                message: chalk.bold.blue("Enter items' department."),
-                type: "input",
-              },
-              {
-                name: "price",
-                message: chalk.bold.blue("Enter items' price."),
-                type: "number",
-              },
-              {
-                name: "quantity",
-                message: chalk.bold.blue("Enter items' quantity."),
-                type: "number",
-              }
-            ])
-            .then (function addItem(newItem) {
-                var query = connection.query(
-                    "INSERT INTO products SET ?",
-                    {
-                      product_name: newItem.productName,
-                      department_name: newItem.department,
-                      price: newItem.price,
-                      stock_quantity: newItem.quantity,
-                    },
-                    function(err, res) {
-                      console.log(res.affectedRows + " product inserted!\n");
-                      console.log(chalk.bold.redBright("\n\nReview updated inventory:\n"));
-                      viewProductsForSale();
-                    }
-                  );     
-                  // logs the actual query being run
-                  console.log(query.sql);
-            })   
+    inquirer
+        .prompt([
+          {
+            name: "productName",
+            message: chalk.bold.blue("Enter new product name"),
+            type: "input",
+          },
+          {
+            name: "department",
+            message: chalk.bold.blue("Enter items' department."),
+            type: "input",
+          },
+          {
+            name: "price",
+            message: chalk.bold.blue("Enter items' price."),
+            type: "number",
+          },
+          {
+            name: "quantity",
+            message: chalk.bold.blue("Enter items' quantity."),
+            type: "number",
+          }
+        ])
+        .then (function addItem(newItem) {
+            var query = connection.query(
+                "INSERT INTO products SET ?",
+                {
+                  product_name: newItem.productName,
+                  department_name: newItem.department,
+                  price: newItem.price,
+                  stock_quantity: newItem.quantity,
+                },
+                function(err, res) {
+                  console.log(res.affectedRows + " product inserted!\n");
+                  console.log(chalk.bold.redBright("\n\nReview updated inventory:\n"));
+                  viewProductsForSale();
+                }
+            );     
+          // logs the actual query being run
+            console.log(query.sql);
+        })   
 }
 
 function deleteProduct() {

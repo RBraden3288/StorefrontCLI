@@ -75,6 +75,12 @@ show how the total inventory and low inventory warning (when there is an item wi
     <img src="https://github.com/RBraden3288/StorefrontCLI/blob/master/images/mgrview.png?raw=true" width="500">
 <br>
 
+Otherwise, if the quantity of an item is greater than five, the message "Everything is in stock!" is displayed and the user is diverted to the main manager menu.
+
+<br>
+    <img src="https://github.com/RBraden3288/StorefrontCLI/blob/master/images/inStock.png?raw=true" width="500">
+<br>
+
 The execution of the functions:
     <ul>
         <li>addNewProduct() </li>
