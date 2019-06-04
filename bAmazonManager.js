@@ -31,8 +31,8 @@ function mgrOptions() {
             choices: [
                 "View Products For Sale",
                 "View Low Inventory/Order Inventory",
-                // "Order Inventory",
                 "Add New Product",
+                "Delete From Iventory",
                 "Exit Options"
             ]
         })
@@ -45,13 +45,13 @@ function mgrOptions() {
             case "View Low Inventory/Order Inventory":
                 viewLowInventory();
                 break;
-            // case "Add to Inventory":
-            //     orderInventory();
-            //     break;
-            case "Add New Product":
-                // addNewProduct();
-                break;
-            case "Exit Options":
+                case "Add New Product":
+                    addNewProduct();
+                    break;
+                case "Delete From Iventory":
+                    deleteProduct();
+                    break;
+                case "Exit Options":
                 connection.end();
                 break;
             }   
@@ -129,8 +129,8 @@ function orderInventory() {
         //update quantity per mgrinput
         // updateInventory();
         //direct to viewProducts to show new inventory
-        console.log(chalk.bold.redBright("\n\nReview updated inventory:\n"));
-        viewProductsForSale();
+        // console.log(chalk.bold.redBright("\n\nReview updated inventory:\n"));
+        // viewProductsForSale();
       });
 };
 
@@ -147,6 +147,75 @@ function orderInventory() {
 // }
 
 function addNewProduct() {
-    
-};
+    // var queryAddProduct = ("");
+    // connection.query(queryAddProduct, function(error, response){
+    //     if (error) {
+    //         console.log(error)
+    //     } else {
+            inquirer
+            .prompt([
+              {
+                name: "productName",
+                message: chalk.bold.blue("Enter new product name"),
+                type: "input",
+              },
+              {
+                name: "department",
+                message: chalk.bold.blue("Enter items' department."),
+                type: "input",
+              },
+              {
+                name: "price",
+                message: chalk.bold.blue("Enter items' price."),
+                type: "number",
+              },
+              {
+                name: "quantity",
+                message: chalk.bold.blue("Enter items' quantity."),
+                type: "number",
+              }
+            ])
+            .then (function addItem(newItem) {
+                var query = connection.query(
+                    "INSERT INTO products SET ?",
+                    {
+                      product_name: newItem.productName,
+                      department_name: newItem.department,
+                      price: newItem.price,
+                      stock_quantity: newItem.quantity,
+                    },
+                    function(err, res) {
+                      console.log(res.affectedRows + " product inserted!\n");
+                      console.log(chalk.bold.redBright("\n\nReview updated inventory:\n"));
+                      viewProductsForSale();
+                    }
+                  );     
+                  // logs the actual query being run
+                  console.log(query.sql);
+            })   
+}
 
+function deleteProduct() {
+    console.log(chalk.bold.redBright("WARNING!! You are about to delete a product."))
+    inquirer
+            .prompt([
+              {
+                name: "productID",
+                message: chalk.bold.blue("Enter item id of product to be removed: "),
+                type: "number",
+              }
+            ])
+    .then (function deleteItem(remove){
+        connection.query(
+          "DELETE FROM products WHERE ?",
+          {
+            item_id: remove.productID
+          },
+          function(err, res) {
+            console.log(res.affectedRows + " products deleted!\n");
+            console.log(chalk.bold.redBright("\n\nReview updated inventory:\n"));
+            viewProductsForSale();
+          }
+        )
+    })
+}

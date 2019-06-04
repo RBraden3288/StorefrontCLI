@@ -75,6 +75,18 @@ show how the total inventory and low inventory warning (when there is an item wi
     <img src="https://github.com/RBraden3288/StorefrontCLI/blob/master/images/mgrview.png?raw=true" width="500">
 <br>
 
+The execution of the functions:
+    <ul>
+        <li>addNewProduct() </li>
+        <li>deleteProduct()</li>
+    </ul>
+
+produces the option to add or delete a product. Although the deleteProduct function was not a requirement, it was added in the event of an input error for the function, addNewProduct.
+
+<br>
+    <img src="https://github.com/RBraden3288/StorefrontCLI/blob/master/images/addOrDeleteProduct.png?raw=true" width="500">
+<br>
+
 ---------------------------------------------------------------
 
 <h3>RESOURCES:</h3>
