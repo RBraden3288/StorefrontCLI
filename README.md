@@ -1,5 +1,3 @@
-<h2><u>STOREFRONT CLI</u></h2>
-
 # StorefrontCLI
 Using Node.js &amp; MySQl to create an Amazon-like storefront.
 

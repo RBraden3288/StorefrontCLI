@@ -30,8 +30,8 @@ function mgrOptions() {
             message: chalk.bold.blue("Manager Options: "),
             choices: [
                 "View Products For Sale",
-                "View Low Inventory",
-                "Order Inventory",
+                "View Low Inventory/Order Inventory",
+                // "Order Inventory",
                 "Add New Product",
                 "Exit Options"
             ]
@@ -42,12 +42,12 @@ function mgrOptions() {
             case "View Products For Sale":
                 viewProductsForSale();
                 break;
-            case "View Low Inventory":
+            case "View Low Inventory/Order Inventory":
                 viewLowInventory();
                 break;
-            case "Add to Inventory":
-                orderInventory();
-                break;
+            // case "Add to Inventory":
+            //     orderInventory();
+            //     break;
             case "Add New Product":
                 // addNewProduct();
                 break;
@@ -88,19 +88,9 @@ function viewLowInventory() {
                    (chalk.yellowBright("Item id :" + response[i].item_id + 
                     " || Product: " + response[i].product_name +
                     " || Stock_quantity: " + response[i].stock_quantity + "\n")));
-                console.log(chalk.red("Order more using ") + (chalk.bold.cyan("Order Inventory")) + (chalk.red(" option in")) + (chalk.bold.magenta(" Manager Options.\n")));
-                    //use inquirer to prompt manager to order more stock
-                    // inquirer
-                    // .prompt ({
-                    //     name: "order",
-                    //     message: chalk.bold.blue("Order more inventory? \n"),
-                    //     type: "confirm",
-                    // })
-                    // .then (function(){
-                    //     addToInventory();
-                    // })
-                //return to main menu
-                mgrOptions()
+                console.log(chalk.red("Redirecting to order form: ") + (chalk.bold.cyan("Order Inventory")) + (chalk.red(".........")));
+                // directs to orderinventory();
+                orderInventory();
             }              
         } 
     });
@@ -121,23 +111,40 @@ function orderInventory() {
     .prompt([
       {
         name: "itemID",
-        message: chalk.bold.blue("Please enter the ID of the product to be re-stocked."),
+        message: chalk.bold.yellow("To exit order form: control+c.") + chalk.bold.cyan("\nOtherwise, \nplease enter the ID of the product to be re-stocked."),
         type: "number",
       },
       {
         name: "quantity",
-        message: chalk.bold.blue("Enter order amount"),
+        message: chalk.bold.cyan("Enter order amount"),
         type: "number",
       }
     ])
-    .then(function (fulfillOrder) {
+    .then(function (mgrInput) {
         // If the the answers are inputed, we display the reponse
-        var itemStoreNeeds = fulfillOrder.itemID;
-        var howManyStoreNeeds = fulfillOrder.quantity;
-        updateInventory(itemStoreNeeds, howManyStoreNeeds)
+        var itemStoreNeeds = mgrInput.itemID;
+        var howManyStoreNeeds = mgrInput.quantity;
+        console.log(chalk.bold.yellow("\nYou are ordering " + howManyStoreNeeds + " unit(s) of item id#:" + itemStoreNeeds + "\n\n"));
+        console.log(chalk.green("Updating inventory......................"));
+        //update quantity per mgrinput
+        // updateInventory();
+        //direct to viewProducts to show new inventory
+        console.log(chalk.bold.redBright("\n\nReview updated inventory:\n"));
+        viewProductsForSale();
       });
 };
 
+// function updateInventory(itemStoreNeeds, howManyStoreNeeds){
+//   var queryAddStock = "UPDATE products SET stock_quantity = ? WHERE item_id = ?",
+//         [howManyStoreNeeds, itemStoreNeeds,];
+//     connection.query(queryAddStock, function (error, response) {
+//         if (error) {
+//             console.log(error)
+//         } else {
+//         console.log(response.affectedRows + " products updated!\n");
+//         }
+//       }) 
+// }
 
 function addNewProduct() {
     
