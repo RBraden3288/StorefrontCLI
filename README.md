@@ -74,7 +74,7 @@ The execution of the functions:
 show how the total inventory and low inventory warning is displayed for the manager:
 
 <br>
-    <img src="mgrview" width="500">
+    <img src="https://github.com/RBraden3288/StorefrontCLI/blob/master/images/mgrview.png?raw=true" width="500">
 <br>
 
 ---------------------------------------------------------------
